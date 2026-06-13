@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.simanja.controller.LaporanController"
+            styleClass="root-dark"
+            prefWidth="1100" prefHeight="700">
+
+    <!-- SIDEBAR -->
+    <left>
+        <VBox fx:id="sidebar" styleClass="sidebar" prefWidth="220" spacing="0" minWidth="0">
+            <padding><Insets top="24" right="0" bottom="24" left="0"/></padding>
+            <HBox alignment="CENTER_LEFT" spacing="10" styleClass="sidebar-brand-row">
+                <padding><Insets top="0" right="20" bottom="20" left="20"/></padding>
+                <ImageView fitWidth="28" fitHeight="28" preserveRatio="true" smooth="true">
+                    <image><Image url="@../images/logo-simanja.png"/></image>
+                </ImageView>
+                <Label text="SiManja" styleClass="sidebar-brand"/>
+            </HBox>
+            <Separator styleClass="sidebar-separator"/>
+            <Region prefHeight="8"/>
+            <Button text="🏠  Dashboard"  styleClass="sidebar-btn"         prefWidth="220" onAction="#handleDashboard"/>
+            <Button text="⊟  Transaksi"   styleClass="sidebar-btn"         prefWidth="220" onAction="#handleTransaksi"/>
+            <Button text="⊞  Target"      styleClass="sidebar-btn"         prefWidth="220" onAction="#handleTarget"/>
+            <Button text="📊  Laporan"    styleClass="sidebar-btn-active"  prefWidth="220" onAction="#handleLaporan"/>
+            <Region VBox.vgrow="ALWAYS"/>
+            <Separator styleClass="sidebar-separator"/>
+            <Region prefHeight="8"/>
+            <HBox alignment="CENTER">
+                <padding><Insets top="0" right="12" bottom="8" left="12"/></padding>
+                <Button text="+ Catat Transaksi" styleClass="btn-sidebar-action"
+                        prefWidth="196" onAction="#handleCatatTransaksi"/>
+            </HBox>
+            <Button text="⚙  Settings"   styleClass="sidebar-btn"        prefWidth="220" onAction="#handleProfil"/>
+
+            <Button text="→  Logout"     styleClass="sidebar-btn-danger" prefWidth="220" onAction="#handleLogout"/>
+        </VBox>
+    </left>
+
+    <!-- MAIN CONTENT -->
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="scroll-pane-dark">
+            <VBox spacing="24" styleClass="main-content">
+                <padding><Insets top="28" right="30" bottom="30" left="30"/></padding>
+
+                <!-- Header -->
+                <HBox alignment="CENTER_LEFT" spacing="12">
+                    <Button fx:id="btnHamburger" text="☰" styleClass="btn-hamburger"
+                            onAction="#handleToggleSidebar"/>
+                    <VBox spacing="2" HBox.hgrow="ALWAYS">
+                        <Label text="Laporan" styleClass="page-title"/>
+                        <Label text="Analisis pemasukan dan pengeluaran kamu." styleClass="page-subtitle"/>
+                    </VBox>
+                </HBox>
+
+                <!-- Charts Row: Donut + Bar -->
+                <HBox spacing="16">
+                    <!-- Alokasi Pengeluaran (Donut) -->
+                    <VBox styleClass="chart-card" spacing="12" prefWidth="340">
+                        <Label text="Alokasi Pengeluaran" styleClass="section-title"/>
+                        <PieChart fx:id="pieChart" styleClass="dark-chart" prefHeight="260" animated="false"
+                                  legendVisible="true" legendSide="BOTTOM"/>
+                    </VBox>
+
+                    <!-- Tren Arus Kas Bulanan (Bar) -->
+                    <VBox styleClass="chart-card" spacing="12" HBox.hgrow="ALWAYS">
+                        <HBox alignment="CENTER_LEFT">
+                            <Label text="Tren Arus Kas Bulanan" styleClass="section-title" HBox.hgrow="ALWAYS"/>
+                            <HBox spacing="12">
+                                <HBox alignment="CENTER_LEFT" spacing="6">
+                                    <Region styleClass="legend-dot-green" prefWidth="10" prefHeight="10"/>
+                                    <Label text="Pemasukan" styleClass="legend-label"/>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" spacing="6">
+                                    <Region styleClass="legend-dot-orange" prefWidth="10" prefHeight="10"/>
+                                    <Label text="Pengeluaran" styleClass="legend-label"/>
+                                </HBox>
+                            </HBox>
+                        </HBox>
+                        <BarChart fx:id="barChart" styleClass="dark-chart" prefHeight="260" animated="false"
+                                  legendVisible="false">
+                            <xAxis><CategoryAxis fx:id="xAxis"/></xAxis>
+                            <yAxis><NumberAxis fx:id="yAxis"/></yAxis>
+                        </BarChart>
+                    </VBox>
+                </HBox>
+
+                <!-- Insight Pintar Cards -->
+                <VBox spacing="12">
+                    <HBox alignment="CENTER_LEFT" spacing="8">
+                        <Label text="✦" styleClass="insight-star"/>
+                        <Label text="Insight Pintar" styleClass="section-title"/>
+                    </HBox>
+                    <HBox spacing="16">
+                        <!-- Card 1: Kategori Terboros -->
+                        <VBox styleClass="insight-stat-card" spacing="8" HBox.hgrow="ALWAYS">
+                            <HBox alignment="CENTER_LEFT" spacing="8">
+                                <Label text="⚠" styleClass="insight-icon-warn"/>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <Label text="Boros" styleClass="badge-boros"/>
+                            </HBox>
+                            <Label text="Kategori Terboros" styleClass="insight-card-title2"/>
+                            <Label fx:id="lblKategoriTerboros"
+                                   text="Bulan ini pengeluaran terbesarmu ada di kategori Makanan."
+                                   styleClass="insight-card-text" wrapText="true"/>
+                        </VBox>
+
+                        <!-- Card 2: Hari Paling Boros -->
+                        <VBox styleClass="insight-stat-card" spacing="8" HBox.hgrow="ALWAYS">
+                            <HBox alignment="CENTER_LEFT" spacing="8">
+                                <Label text="📅" styleClass="insight-icon-info"/>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <Label text="Pola" styleClass="badge-pola"/>
+                            </HBox>
+                            <Label text="Hari Paling Boros" styleClass="insight-card-title2"/>
+                            <Label fx:id="lblHariTerboros"
+                                   text="Kamu paling banyak mengeluarkan uang pada hari Sabtu."
+                                   styleClass="insight-card-text" wrapText="true"/>
+                        </VBox>
+
+                        <!-- Card 3: Rata-rata Harian -->
+                        <VBox styleClass="insight-stat-card" spacing="8" HBox.hgrow="ALWAYS">
+                            <HBox alignment="CENTER_LEFT" spacing="8">
+                                <Label text="📊" styleClass="insight-icon-stable"/>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <Label text="Stabilita" styleClass="badge-stabil"/>
+                            </HBox>
+                            <Label text="Rata-rata Pengeluaran Harian" styleClass="insight-card-title2"/>
+                            <Label fx:id="lblRataHarian"
+                                   text="Rata-rata uang yang kamu habiskan setiap harinya di bulan ini."
+                                   styleClass="insight-card-text" wrapText="true"/>
+                        </VBox>
+                    </HBox>
+                </VBox>
+
+                <!-- Statistik Summary Cards -->
+                <HBox spacing="16">
+                    <VBox styleClass="mini-card-green" spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="Total Pemasukan" styleClass="mini-card-label"/>
+                        <Label fx:id="lblTotalPemasukan" text="Rp 0" styleClass="mini-card-value"/>
+                    </VBox>
+                    <VBox styleClass="mini-card-red" spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="Total Pengeluaran" styleClass="mini-card-label"/>
+                        <Label fx:id="lblTotalPengeluaran" text="Rp 0" styleClass="mini-card-value"/>
+                    </VBox>
+                    <VBox styleClass="mini-card-blue" spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="Saldo Bersih" styleClass="mini-card-label"/>
+                        <Label fx:id="lblSaldo" text="Rp 0" styleClass="mini-card-value"/>
+                    </VBox>
+                    <VBox styleClass="mini-card-yellow" spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="Rata-rata Pemasukan/Bulan" styleClass="mini-card-label"/>
+                        <Label fx:id="lblRataPemasukan" text="Rp 0" styleClass="mini-card-value"/>
+                    </VBox>
+                    <VBox styleClass="mini-card-orange" spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="Rata-rata Pengeluaran/Bulan" styleClass="mini-card-label"/>
+                        <Label fx:id="lblRataPengeluaran" text="Rp 0" styleClass="mini-card-value"/>
+                    </VBox>
+                </HBox>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>

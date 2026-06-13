@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.geometry.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.simanja.controller.DashboardController"
+            styleClass="root-dark"
+            prefWidth="1100" prefHeight="700">
+
+    <!-- SIDEBAR -->
+    <left>
+        <VBox fx:id="sidebar" styleClass="sidebar" prefWidth="220" spacing="0" minWidth="0">
+            <padding><Insets top="24" right="0" bottom="24" left="0"/></padding>
+
+            <!-- Brand -->
+            <HBox alignment="CENTER_LEFT" spacing="10" styleClass="sidebar-brand-row">
+                <padding><Insets top="0" right="20" bottom="20" left="20"/></padding>
+                <ImageView fitWidth="28" fitHeight="28" preserveRatio="true" smooth="true">
+                    <image><Image url="@../images/logo-simanja.png"/></image>
+                </ImageView>
+                <Label text="SiManja" styleClass="sidebar-brand"/>
+            </HBox>
+
+            <Separator styleClass="sidebar-separator"/>
+            <Region prefHeight="8"/>
+
+            <Button text="🏠  Dashboard"   styleClass="sidebar-btn-active"  prefWidth="220" onAction="#handleDashboard"/>
+            <Button text="⊟  Transaksi"    styleClass="sidebar-btn"         prefWidth="220" onAction="#handleTransaksi"/>
+            <Button text="⊞  Target"       styleClass="sidebar-btn"         prefWidth="220" onAction="#handleTarget"/>
+            <Button text="📊  Laporan"     styleClass="sidebar-btn"         prefWidth="220" onAction="#handleLaporan"/>
+
+            <Region VBox.vgrow="ALWAYS"/>
+            <Separator styleClass="sidebar-separator"/>
+            <Region prefHeight="8"/>
+
+            <HBox alignment="CENTER">
+                <padding><Insets top="0" right="12" bottom="8" left="12"/></padding>
+                <Button text="+ Catat Transaksi" styleClass="btn-sidebar-action"
+                        prefWidth="196" onAction="#handleCatatTransaksi"/>
+            </HBox>
+
+            <Button text="⚙  Settings"   styleClass="sidebar-btn"        prefWidth="220" onAction="#handleProfil"/>
+
+            <Button text="→  Logout"      styleClass="sidebar-btn-danger" prefWidth="220" onAction="#handleLogout"/>
+        </VBox>
+    </left>
+
+    <!-- MAIN CONTENT -->
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="scroll-pane-dark">
+            <VBox spacing="24" styleClass="main-content">
+                <padding><Insets top="28" right="30" bottom="30" left="30"/></padding>
+
+                <!-- Header -->
+                <HBox alignment="CENTER_LEFT" spacing="12">
+                    <Button fx:id="btnHamburger" text="☰" styleClass="btn-hamburger"
+                            onAction="#handleToggleSidebar"/>
+                    <VBox spacing="2" HBox.hgrow="ALWAYS">
+                        <Label text="Dashboard" styleClass="page-title"/>
+                        <Label text="Overview of your financial performance this month." styleClass="page-subtitle"/>
+                    </VBox>
+                    <HBox alignment="CENTER_RIGHT" spacing="8">
+                        <HBox fx:id="hboxUserBadge" styleClass="user-name-badge-btn"
+                              alignment="CENTER_LEFT" spacing="10"
+                              onMouseClicked="#handleProfil" style="-fx-cursor: hand;">
+                            <padding><Insets top="6" right="14" bottom="6" left="8"/></padding>
+
+                            <!-- Avatar mini: foto atau inisial -->
+                            <StackPane prefWidth="32" prefHeight="32">
+                                <ImageView fx:id="imgAvatarDashboard"
+                                           fitWidth="32" fitHeight="32"
+                                           preserveRatio="false"
+                                           visible="false" managed="false">
+                                    <clip>
+                                        <Circle xmlns="javafx.scene.shape"
+                                                centerX="16" centerY="16" radius="16"/>
+                                    </clip>
+                                </ImageView>
+                                <Label fx:id="lblAvatarDashboard" text="U"
+                                       styleClass="avatar-circle-mini"/>
+                            </StackPane>
+
+                            <Label fx:id="lblNamaDashboard" text="User"
+                                   styleClass="user-badge-name"/>
+                        </HBox>
+                    </HBox>
+                </HBox>
+
+                <!-- SUMMARY CARDS -->
+                <HBox spacing="16">
+                    <VBox styleClass="summary-card" HBox.hgrow="ALWAYS" spacing="6">
+                        <Label text="Total Saldo Saat Ini" styleClass="card-label"/>
+                        <Label fx:id="lblSaldo" text="Rp 0" styleClass="card-value-white"/>
+                    </VBox>
+                    <VBox styleClass="summary-card" HBox.hgrow="ALWAYS" spacing="6">
+                        <Label text="Pemasukan Bulan Ini" styleClass="card-label"/>
+                        <Label fx:id="lblTotalPemasukan" text="Rp 0" styleClass="card-value-white"/>
+                    </VBox>
+                    <VBox styleClass="summary-card" HBox.hgrow="ALWAYS" spacing="6">
+                        <Label text="Pengeluaran Bulan Ini" styleClass="card-label"/>
+                        <Label fx:id="lblTotalPengeluaran" text="Rp 0" styleClass="card-value-white"/>
+                    </VBox>
+                    <VBox styleClass="summary-card" HBox.hgrow="ALWAYS" spacing="6">
+                        <Label text="Sisa Budget Aman" styleClass="card-label"/>
+                        <Label fx:id="lblSisaBudget" text="Rp 0" styleClass="card-value-white"/>
+                    </VBox>
+                </HBox>
+
+                <!-- CHARTS ROW -->
+                <HBox spacing="16">
+                    <!-- Line Chart -->
+                    <VBox styleClass="chart-card" HBox.hgrow="ALWAYS" spacing="10" prefWidth="600">
+                        <HBox alignment="CENTER_LEFT">
+                            <Label text="Arus Kas (6 Bulan Terakhir)" styleClass="section-title" HBox.hgrow="ALWAYS"/>
+                            <HBox spacing="12">
+                                <HBox alignment="CENTER_LEFT" spacing="6">
+                                    <Region styleClass="legend-dot-green" prefWidth="10" prefHeight="10"/>
+                                    <Label text="Income" styleClass="legend-label"/>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" spacing="6">
+                                    <Region styleClass="legend-dot-orange" prefWidth="10" prefHeight="10"/>
+                                    <Label text="Expense" styleClass="legend-label"/>
+                                </HBox>
+                            </HBox>
+                        </HBox>
+                        <LineChart fx:id="lineChart" styleClass="dark-chart" prefHeight="220" animated="false"
+                                   legendVisible="false">
+                            <xAxis><CategoryAxis fx:id="xAxisLine"/></xAxis>
+                            <yAxis><NumberAxis fx:id="yAxisLine"/></yAxis>
+                        </LineChart>
+                    </VBox>
+
+                    <!-- Donut / Pie Chart -->
+                    <VBox styleClass="chart-card" spacing="10" prefWidth="300">
+                        <Label text="Alokasi Pengeluaran" styleClass="section-title"/>
+                        <PieChart fx:id="pieChart" styleClass="dark-chart" prefHeight="220" animated="false"
+                                  legendVisible="true" legendSide="BOTTOM"/>
+                    </VBox>
+                </HBox>
+
+                <!-- BOTTOM ROW: Status Anggaran + Financial Goals + 5 Transaksi + Tagihan -->
+                <HBox spacing="16">
+                    <!-- Status Anggaran Kritis -->
+                    <VBox styleClass="chart-card" spacing="12" prefWidth="340" HBox.hgrow="ALWAYS">
+                        <Label text="Status Anggaran Kritis" styleClass="section-title"/>
+                        <VBox fx:id="budgetStatusContainer" spacing="10"/>
+                    </VBox>
+
+                    <!-- Financial Goals Tracker -->
+                    <VBox styleClass="chart-card" spacing="12" prefWidth="340" HBox.hgrow="ALWAYS">
+                        <Label text="Financial Goals Tracker" styleClass="section-title"/>
+                        <VBox fx:id="goalsTrackerContainer" spacing="10"/>
+                    </VBox>
+                </HBox>
+
+                <!-- 5 Transaksi Terakhir + Tagihan Mendatang -->
+                <HBox spacing="16">
+                    <!-- Tabel Transaksi -->
+                    <VBox styleClass="table-card" spacing="12" HBox.hgrow="ALWAYS">
+                        <HBox alignment="CENTER_LEFT">
+                            <Label text="5 Transaksi Terakhir" styleClass="section-title" HBox.hgrow="ALWAYS"/>
+                            <Hyperlink text="Lihat Semua" styleClass="link-accent" onAction="#handleTransaksi"/>
+                        </HBox>
+                        <TableView fx:id="tableTransaksi" prefHeight="190" styleClass="dark-table">
+                            <columns>
+                                <TableColumn fx:id="colTanggal"  text="Date"     prefWidth="80"/>
+                                <TableColumn fx:id="colKategori" text="Kategori" prefWidth="110"/>
+                                <TableColumn fx:id="colJudul"    text="Merchant" prefWidth="150"/>
+                                <TableColumn fx:id="colJumlah"   text="Nominal"  prefWidth="130"/>
+                            </columns>
+                        </TableView>
+                    </VBox>
+
+                    <!-- Tagihan Mendatang -->
+                    <VBox styleClass="table-card" spacing="12" prefWidth="280">
+                        <Label text="Tagihan Mendatang" styleClass="section-title"/>
+                        <VBox fx:id="tagihanContainer" spacing="8"/>
+                    </VBox>
+                </HBox>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>
