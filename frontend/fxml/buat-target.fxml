@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.simanja.controller.BuatTargetController"
+      styleClass="modal-dialog"
+      spacing="20" prefWidth="540">
+    <padding><Insets top="28" right="32" bottom="28" left="32"/></padding>
+
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT">
+        <Label text="Buat Target Impian Baru" styleClass="modal-title" HBox.hgrow="ALWAYS"/>
+        <Button text="✕" styleClass="btn-modal-close" onAction="#handleBatal"/>
+    </HBox>
+
+    <Separator styleClass="modal-separator"/>
+
+    <!-- Nama Target + Ikon -->
+    <HBox spacing="16" alignment="TOP_LEFT">
+        <VBox spacing="8" HBox.hgrow="ALWAYS">
+            <Label text="Nama Target" styleClass="field-label"/>
+            <TextField fx:id="txtNama"
+                       promptText="Beli Laptop Baru, Dana Darurat, Liburan..."
+                       styleClass="input-field"/>
+        </VBox>
+        <VBox spacing="8" minWidth="80">
+            <Label text="Ikon" styleClass="field-label"/>
+            <Label fx:id="lblIconSelected" text="🎯" styleClass="icon-picker-selected"/>
+        </VBox>
+    </HBox>
+
+    <!-- Icon Picker Row -->
+    <HBox spacing="8">
+        <Button fx:id="btnIconLaptop" text="💻" styleClass="icon-picker-btn" onAction="#handlePickIcon"/>
+        <Button fx:id="btnIconCar"    text="🚗" styleClass="icon-picker-btn" onAction="#handlePickIcon"/>
+        <Button fx:id="btnIconBeach"  text="🏖️" styleClass="icon-picker-btn" onAction="#handlePickIcon"/>
+        <Button fx:id="btnIconHouse"  text="🏠" styleClass="icon-picker-btn" onAction="#handlePickIcon"/>
+        <Button fx:id="btnIconMoney"  text="💰" styleClass="icon-picker-btn" onAction="#handlePickIcon"/>
+        <Button fx:id="btnIconTarget" text="🎯" styleClass="icon-picker-btn" onAction="#handlePickIcon"/>
+    </HBox>
+
+    <!-- Nominal Target -->
+    <VBox spacing="8">
+        <Label text="Nominal Target Uang" styleClass="field-label"/>
+        <HBox styleClass="amount-input-box" alignment="CENTER_LEFT" spacing="8">
+            <Label text="Rp" styleClass="amount-prefix"/>
+            <TextField fx:id="txtNominal" promptText="0" styleClass="amount-input-field" HBox.hgrow="ALWAYS"/>
+        </HBox>
+    </VBox>
+
+    <!-- Tenggat Waktu -->
+    <VBox spacing="8">
+        <Label text="Tenggat Waktu" styleClass="field-label"/>
+        <DatePicker fx:id="dpDeadline" styleClass="datepicker-dark" prefWidth="99999"/>
+    </VBox>
+
+    <!-- SiManja Insight -->
+    <VBox styleClass="simanja-insight-box" spacing="8">
+        <HBox alignment="CENTER_LEFT" spacing="8">
+            <Label text="✦" styleClass="insight-star"/>
+            <Label text="SiManja Insight" styleClass="insight-box-title"/>
+        </HBox>
+        <Label fx:id="lblInsight"
+               text="Masukkan nominal dan tenggat waktu untuk melihat estimasi tabungan bulanan."
+               styleClass="insight-box-text" wrapText="true"/>
+    </VBox>
+
+    <Label fx:id="lblError" styleClass="error-label" wrapText="true" managed="false" visible="false"/>
+
+    <!-- Buttons -->
+    <HBox alignment="CENTER_RIGHT" spacing="16">
+        <Button text="Batal" styleClass="btn-link-lg" onAction="#handleBatal"/>
+        <Button text="Wujudkan Target" styleClass="btn-primary-full"
+                prefWidth="200" onAction="#handleSubmit"/>
+    </HBox>
+</VBox>
