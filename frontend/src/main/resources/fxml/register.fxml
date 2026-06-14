@@ -89,8 +89,11 @@
                     <Label text="Kata Sandi" styleClass="field-label"/>
                     <HBox styleClass="input-field-wrapper" alignment="CENTER_LEFT" spacing="10">
                         <Label text="🔒" styleClass="input-icon"/>
-                        <PasswordField fx:id="txtPassword" promptText="••••••••"
-                                       styleClass="input-field-borderless" HBox.hgrow="ALWAYS"/>
+                        <StackPane alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+                            <PasswordField fx:id="txtPassword" promptText="••••••••" styleClass="input-field-borderless" />
+                            <TextField fx:id="txtPasswordVisible" promptText="••••••••" styleClass="input-field-borderless" visible="false" managed="false"/>
+                        </StackPane>
+                        <Label fx:id="lblTogglePassword" text="👁" styleClass="input-icon-action"/>
                     </HBox>
                     <Label text="Minimal 8 karakter" styleClass="form-hint"/>
                 </VBox>
@@ -99,25 +102,13 @@
                     <Label text="Konfirmasi Kata Sandi" styleClass="field-label"/>
                     <HBox styleClass="input-field-wrapper" alignment="CENTER_LEFT" spacing="10">
                         <Label text="🔒" styleClass="input-icon"/>
-                        <PasswordField fx:id="txtKonfirmPassword" promptText="••••••••"
-                                       styleClass="input-field-borderless" HBox.hgrow="ALWAYS"/>
+                        <StackPane alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+                            <PasswordField fx:id="txtKonfirmPassword" promptText="••••••••" styleClass="input-field-borderless" />
+                            <TextField fx:id="txtKonfirmPasswordVisible" promptText="••••••••" styleClass="input-field-borderless" visible="false" managed="false"/>
+                        </StackPane>
+                        <Label fx:id="lblToggleKonfirm" text="👁" styleClass="input-icon-action"/>
                     </HBox>
                 </VBox>
-
-                <HBox alignment="CENTER_LEFT" spacing="8" style="-fx-padding: 0 0 18 0;">
-                    <Label text="□" styleClass="form-hint" style="-fx-font-size: 13px;"/>
-                    <Label styleClass="form-hint">
-                        <graphic>
-                            <HBox spacing="4" alignment="CENTER_LEFT">
-                                <Label text="Saya setuju dengan" styleClass="form-hint"/>
-                                <Hyperlink text="Syarat &amp; Ketentuan" styleClass="link-accent-sm"/>
-                                <Label text="serta" styleClass="form-hint"/>
-                                <Hyperlink text="Kebijakan Privasi" styleClass="link-accent-sm"/>
-                                <Label text="Simanja." styleClass="form-hint"/>
-                            </HBox>
-                        </graphic>
-                    </Label>
-                </HBox>
 
                 <Label fx:id="lblError"   styleClass="error-label"   wrapText="true"
                        managed="false" visible="false" style="-fx-padding: 0 0 10 0;"/>
