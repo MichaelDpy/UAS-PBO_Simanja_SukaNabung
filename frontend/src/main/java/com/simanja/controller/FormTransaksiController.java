@@ -146,7 +146,7 @@ public class FormTransaksiController {
                                kategori, tanggal, keterangan);
             }
             closeDialog();
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             showError(e.getMessage());
         }
     }
