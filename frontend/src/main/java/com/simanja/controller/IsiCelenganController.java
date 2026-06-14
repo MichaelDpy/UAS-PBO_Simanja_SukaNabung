@@ -54,6 +54,8 @@ public class IsiCelenganController {
         String raw = txtNominal.getText().trim().replace(".", "").replace(",", "");
         if (raw.isEmpty()) {
             lblError.setText("Nominal harus diisi.");
+            lblError.setVisible(true);
+            lblError.setManaged(true);
             return;
         }
 
@@ -62,6 +64,8 @@ public class IsiCelenganController {
             amount = Double.parseDouble(raw);
         } catch (NumberFormatException e) {
             lblError.setText("Nominal tidak valid.");
+            lblError.setVisible(true);
+            lblError.setManaged(true);
             return;
         }
 
